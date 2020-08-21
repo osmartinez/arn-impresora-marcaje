@@ -1,0 +1,32 @@
+{
+  "name": "arn-impresora-marcaje",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon --ignore '*.json' --ignore 'src/public' ./src/app.js",
+    "prod": "cross-env NODE_ENV=production node ./src/app.js",
+    "test": "test"
+  },
+  "author": "oscar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.2",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "mssql": "^6.2.1",
+    "node-fetch": "^2.6.0",
+    "promise-socket": "^7.0.0",
+    "timeago.js": "^4.0.2",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
