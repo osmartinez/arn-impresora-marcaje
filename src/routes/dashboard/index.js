@@ -9,7 +9,7 @@ router.get('/',(req,res)=>{
 router.post('/impresora/cambios',async (req,res)=>{
     console.log(req.body)
     let lineas = []
-    let msg = `<WIND id="1234"><SETMESSAGEVALUES FilePath="//messages/test.nisx">` // nombre fichero
+    let msg = `<WIND id="1234"><SETMESSAGEVALUES FilePath="//messages/3lineas.nisx">` // nombre fichero
 
     for(let i=1;i<=3;i++){
         if(req.body[`linea${i}`].trim() != ''){
@@ -27,7 +27,7 @@ router.post('/impresora/cambios',async (req,res)=>{
         const promiseSocket = new PromiseSocket(socket)
         try{
             promiseSocket.setTimeout(2000)
-            await promiseSocket.connect({port: 1337, host: 'localhost'})
+            await promiseSocket.connect({port:9991 , host: '192.168.1.64'})
             await promiseSocket.write(msg)
             await promiseSocket.end()
             res.json({mensaje: 'Mensaje enviado'})
