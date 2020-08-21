@@ -62,7 +62,7 @@ function sumarSaldos(){
 function cambiarEstadoImpresora(e){
     e.preventDefault()
     let encendida = checkEstado.checked
-    let cmd = encendida=='true'? 'off':'on'
+    let cmd = (encendida=='true'|| encendida)? 'off':'on'
     $.ajax({
         method: 'POST',
         timeout: 3000,
