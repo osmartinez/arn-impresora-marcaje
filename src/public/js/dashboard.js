@@ -60,9 +60,10 @@ function sumarSaldos(){
     elementoSaldos.innerHTML = String(saldosActuales + 1)
 }
 function cambiarEstadoImpresora(e){
+
     e.preventDefault()
-    let encendida = checkEstado.checked
-    let cmd = (encendida=='true'|| encendida)? 'off':'on'
+    let encendida = String(checkEstado.checked)
+    let cmd = (encendida=='true')? 'on':'off'
     $.ajax({
         method: 'POST',
         timeout: 3000,
