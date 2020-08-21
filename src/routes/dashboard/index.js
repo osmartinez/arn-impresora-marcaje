@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const msgMaker = require('../../lib/msg-maker')
 const printerSettings = require('../../lib/printer-settings')
-const {buscarPrepaquete} = require('../../lib/fetch')
+const {buscarPrepaquete, buscarImpresionMarcajePorUtillajeTalla, guardarImpresionMarcajePorUtillajeTalla} = require('../../lib/fetch')
 
 router.get('/',(req,res)=>{
     res.render('dashboard/index')
@@ -41,7 +41,30 @@ router.post('/prepaquete',async (req,res)=>{
         console.log(err)
         res.sendStatus(500)
     }
- })
+})
+
+router.post('/utillajes/buscarMarcajes',async (req,res)=>{
+    try{
+        const {codigoUtillaje,talla} = req.body
+        let utillaje = await buscarImpresionMarcajePorUtillajeTalla(codigoUtillaje,talla)
+        res.json(utillaje) 
+    }catch(err){
+        console.log(err)
+        res.sendStatus(500)
+    }
+})
+
+router.post('/utillajes/guardarMarcajes',async (req,res)=>{
+    try{
+        const {codigoUtillaje,talla, marcaje1, marcaje2, marcaje3} = req.body
+        let utillaje = await guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje,talla,marcaje1,marcaje2,marcaje3)
+        res.json(utillaje) 
+    }catch(err){
+        console.log(err)
+        res.sendStatus(500)
+    }
+})
+
 
 router.post('/impresora/on',async (req,res)=>{
    await cambiarEstadoImpresora(encendida=true, res)

@@ -2,8 +2,10 @@ let saldos = 0
 let cadenaLectura = ''
 let leyendoCodigo = false
 let comunicandoImpresora = false
+let timerTextosMarcajes = null
+let utillajeTalla = null
 
-const inputs = document.getElementsByTagName('INPUT')
+const inputs = Array.from(document.getElementsByTagName('INPUT')).filter(x=>x.id.includes('linea'))
 const elementoSaldos = document.getElementById('saldos')
 const checkEstado = document.getElementById('checkEstado')
 const elementoInfoCliente = document.getElementById('info-cliente')
@@ -24,33 +26,55 @@ function limpiarCodigo() {
         }
     }
 }
-function enviarTextoImpresora() {
-    if (!comunicandoImpresora) {
-        comunicandoImpresora = true
-        setTimeout(() => {
+function enviarTextoImpresora(actualizar=true) {
+    if (timerTextosMarcajes != null) {
+        clearTimeout(timerTextosMarcajes)
+    }
+
+    timerTextosMarcajes = setTimeout(() => {
+        $.ajax({
+            method: 'POST',
+            timeout: 3000,
+            url: `/dashboard/impresora/cambios`,
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(
+                {
+                    linea1: document.getElementById('input-linea-1').value,
+                    linea2: document.getElementById('input-linea-2').value,
+                    linea3: document.getElementById('input-linea-3').value
+                }),
+            success: () => {
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+
+        if(utillajeTalla != null && actualizar){
             $.ajax({
                 method: 'POST',
                 timeout: 3000,
-                url: `/dashboard/impresora/cambios`,
+                url: `/dashboard/utillajes/guardarMarcajes`,
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify(
                     {
-                        'linea1': document.getElementById('input-linea-1').value,
-                        'linea2': document.getElementById('input-linea-2').value,
-                        'linea3': document.getElementById('input-linea-3').value
+                        codigoUtillaje: utillajeTalla.codigoUtillaje,
+                        talla: utillajeTalla.talla,
+                        marcaje1: document.getElementById('input-linea-1').value,
+                        marcaje2: document.getElementById('input-linea-2').value,
+                        marcaje3: document.getElementById('input-linea-3').value
                     }),
                 success: () => {
-                    comunicandoImpresora = false
                 },
                 error: (err) => {
-                    comunicandoImpresora = false
                     console.log(err)
                 }
             })
-        }, 5000)
-    }
-
+        }
+       
+    }, 3000)
 }
 function restarSaldos() {
     let saldosActuales = Number(elementoSaldos.innerHTML)
@@ -92,12 +116,41 @@ function buscarPrepaquete(codigoPrepaquete) {
                 codigoPrepaquete: codigoPrepaquete
             }),
         success: (data) => {
-            if(data != null && data.length==1 )
-            {
+            if (data != null && data.length == 1) {
+                console.log(data[0])
                 let prepaquete = data[0]
                 elementoInfoCliente.innerHTML = prepaquete.NOMBRECLI
                 elementoInfoModelo.innerHTML = prepaquete.DESCRIPCIONARTICULO
                 elementoInfoPedido.innerHTML = '19992/15'
+                $.ajax({
+                    method: 'POST',
+                    timeout: 3000,
+                    url: `/dashboard/utillajes/buscarMarcajes`,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(
+                        {
+                            codigoUtillaje: prepaquete.CodUtillaje,
+                            talla: prepaquete.Talla
+                        }),
+                    success: (utillaje) => {
+                        console.log(utillaje)
+                        if (utillaje != null) {
+                            inputs[0].value = utillaje.ImpresionMarcaje1
+                            inputs[1].value = utillaje.ImpresionMarcaje2
+                            inputs[2].value = utillaje.ImpresionMarcaje3
+
+                            utillajeTalla = {codigoUtillaje: utillaje.CodUtillaje, talla: utillaje.TallaUtillaje}
+                            enviarTextoImpresora(actualizar=false)
+                        }
+                        else{
+                            utillajeTalla = null
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
             }
         },
         error: (err) => {

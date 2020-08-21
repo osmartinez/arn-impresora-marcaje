@@ -122,5 +122,41 @@ module.exports = {
             console.error(err)
             return null
         }
-    }
+    },
+
+    async buscarImpresionMarcajePorUtillajeTalla(codigoUtillaje, talla) {
+        try {
+            var response = await fetch(`${url}/utillajes/buscarImpresionMarcajePorUtillajeTalla/${codigoUtillaje}/${talla}`)
+            var utillaje = await response.json()
+            return utillaje
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    },
+
+    async guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje, talla, marcaje1, marcaje2, marcaje3) {
+        try {
+
+            var response = await fetch(`${url}/utillajes/guardarImpresionMarcajePorUtillajeTalla`,
+                {
+                    method: 'post',
+                    body: JSON.stringify(
+                        {
+                            codigoUtillaje:codigoUtillaje,
+                            talla: talla,
+                            impresionMarcaje1: marcaje1.trim(),
+                            impresionMarcaje2: marcaje2.trim(),
+                            impresionMarcaje3: marcaje3.trim(),
+                        }
+                    ),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+            var utillaje = await response.json()
+            return utillaje
+        } catch (err) {
+            console.error(err)
+            return null
+        }
+    },
 }
