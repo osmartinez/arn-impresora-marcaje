@@ -7,7 +7,8 @@ const Keyboard = {
 
     eventHandlers: {
       oninput: null,
-      onclose: null
+      onclose: null,
+      onchange: null,
     },
 
     properties: {
@@ -42,6 +43,9 @@ const Keyboard = {
         element.addEventListener("focus", () => {
           this.open(element.value, currentValue => {
             element.value = currentValue;
+            if(this.eventHandlers.onchange != null && typeof this.eventHandlers.onchange === 'function'){
+              this.eventHandlers.onchange()
+            }
           });
         });
       });
