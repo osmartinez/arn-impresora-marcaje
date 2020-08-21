@@ -43,9 +43,7 @@ const Keyboard = {
         element.addEventListener("focus", () => {
           this.open(element.value, currentValue => {
             element.value = currentValue;
-            if(this.eventHandlers.onchange != null && typeof this.eventHandlers.onchange === 'function'){
-              this.eventHandlers.onchange()
-            }
+            
           });
         });
       });
@@ -182,6 +180,9 @@ const Keyboard = {
       this.eventHandlers.oninput = oninput;
       this.eventHandlers.onclose = onclose;
       this.elements.main.classList.add("keyboard--hidden");
+      if(this.eventHandlers.onchange != null && typeof this.eventHandlers.onchange === 'function'){
+        this.eventHandlers.onchange()
+      }
     }
   };
 
