@@ -6,6 +6,9 @@ let comunicandoImpresora = false
 const inputs = document.getElementsByTagName('INPUT')
 const elementoSaldos = document.getElementById('saldos')
 const checkEstado = document.getElementById('checkEstado')
+const elementoInfoCliente = document.getElementById('info-cliente')
+const elementoInfoModelo = document.getElementById('info-modelo')
+const elementoInfoPedido = document.getElementById('info-pedido')
 
 function desseleccionar() {
     var tmp = document.createElement("input");
@@ -49,21 +52,21 @@ function enviarTextoImpresora() {
     }
 
 }
-function restarSaldos(){
+function restarSaldos() {
     let saldosActuales = Number(elementoSaldos.innerHTML)
     if (saldosActuales > 0) {
         elementoSaldos.innerHTML = String(saldosActuales - 1)
     }
 }
-function sumarSaldos(){
+function sumarSaldos() {
     let saldosActuales = Number(elementoSaldos.innerHTML)
     elementoSaldos.innerHTML = String(saldosActuales + 1)
 }
-function cambiarEstadoImpresora(e){
+function cambiarEstadoImpresora(e) {
 
     e.preventDefault()
     let encendida = String(checkEstado.checked)
-    let cmd = (encendida=='true')? 'on':'off'
+    let cmd = (encendida == 'true') ? 'on' : 'off'
     $.ajax({
         method: 'POST',
         timeout: 3000,
@@ -71,6 +74,31 @@ function cambiarEstadoImpresora(e){
         dataType: 'json',
         success: () => {
             checkEstado.checked = !checkEstado.checked
+        },
+        error: (err) => {
+            console.log(err)
+        }
+    })
+}
+function buscarPrepaquete(codigoPrepaquete) {
+    $.ajax({
+        method: 'POST',
+        timeout: 3000,
+        url: `/dashboard/prepaquete`,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(
+            {
+                codigoPrepaquete: codigoPrepaquete
+            }),
+        success: (data) => {
+            if(data != null && data.length==1 )
+            {
+                let prepaquete = data[0]
+                elementoInfoCliente.innerHTML = prepaquete.NOMBRECLI
+                elementoInfoModelo.innerHTML = prepaquete.DESCRIPCIONARTICULO
+                elementoInfoPedido.innerHTML = '19992/15'
+            }
         },
         error: (err) => {
             console.log(err)
@@ -85,6 +113,7 @@ function keyUp(e) {
     if (leyendoCodigo) {
         cadenaLectura += code[code.length - 1]
         if (cadenaLectura.length === 13) {
+            buscarPrepaquete(cadenaLectura)
             limpiarCodigo()
             cadenaLectura = ''
             leyendoCodigo = false
@@ -126,6 +155,6 @@ for (const input of inputs) {
 }
 document.getElementById('btn-restar-saldos').addEventListener('click', restarSaldos, false)
 document.getElementById('btn-sumar-saldos').addEventListener('click', sumarSaldos, false)
-checkEstado.addEventListener('click',cambiarEstadoImpresora,false)
+checkEstado.addEventListener('click', cambiarEstadoImpresora, false)
 // event listeners !!
 

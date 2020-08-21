@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const msgMaker = require('../../lib/msg-maker')
 const printerSettings = require('../../lib/printer-settings')
+const {buscarPrepaquete} = require('../../lib/fetch')
 
 router.get('/',(req,res)=>{
     res.render('dashboard/index')
@@ -30,6 +31,17 @@ async function cambiarEstadoImpresora(encendida,res){
         res.sendStatus(500)
     }
 }
+
+router.post('/prepaquete',async (req,res)=>{
+    try{
+        let codigoPrepaquete = req.body.codigoPrepaquete
+        let prepaquete = await buscarPrepaquete(codigoPrepaquete,'520')
+        res.json(prepaquete) 
+    }catch(err){
+        console.log(err)
+        res.sendStatus(500)
+    }
+ })
 
 router.post('/impresora/on',async (req,res)=>{
    await cambiarEstadoImpresora(encendida=true, res)

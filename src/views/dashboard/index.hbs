@@ -1,52 +1,62 @@
 <style>
-  .btn-updown {
-    width: 30px;
-    height: 30px;
-  }
-
   .lever {
     /* Double-sized Checkboxes */
-    -ms-transform: scale(2);
+    -ms-transform: scale(2.4);
     /* IE */
-    -moz-transform: scale(2);
+    -moz-transform: scale(2.4);
     /* FF */
-    -webkit-transform: scale(2);
+    -webkit-transform: scale(2.4);
     /* Safari and Chrome */
-    -o-transform: scale(2);
+    -o-transform: scale(2.4);
     /* Opera */
   }
 
-  input[type='text']{
-    font-size: large;
+  input[type='text'] {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  .cabecera-linea{
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  .cabecera-info{
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  .info-desc{
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: middle;
   }
 </style>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6 col-sm-6 col-lg-6">
           <h3>Pares</h3>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6 col-sm-6 col-lg-6">
           <h3 class="font-weight-bold">0</h3>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <h3 class="text-right">Saldos</h3>
+        <div class="col-md-6 col-sm-6 col-lg-6">
+          <h3 >Saldos</h3>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6 col-sm-6 col-lg-6">
           <h3 id="saldos" class="font-weight-bold">0</h3>
         </div>
-        <div class="col-md-4">
-          <div class="row">
-            <div class="col-md-6">
-              <a id="btn-restar-saldos" class="btn-floating btn-sm btn-danger"><i class="fas fa-minus"></i></a>
-            </div>
-            <div class="col-md-6">
-              <a id="btn-sumar-saldos" class="btn-floating btn-sm btn-primary"><i class="fas fa-plus"></i></a>
-            </div>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6">
+          <a id="btn-restar-saldos" class="btn-floating btn-lg btn-danger"><i class="fas fa-minus"></i></a>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6">
+          <a id="btn-sumar-saldos" class="btn-floating btn-lg btn-primary"><i class="fas fa-plus"></i></a>
         </div>
       </div>
     </div>
@@ -69,10 +79,10 @@
         <div class="col-md-12">
           <div class="switch">
             <label class="font-weight-bold">
-              <span style="margin-right: 20px ;">OFF</span>
+              <span style="margin-right: 28px ;">OFF</span>
               <input id="checkEstado" type="checkbox">
               <span class="lever"></span>
-              <span style="margin-left: 20px ;">ON</span>
+              <span style="margin-left: 28px ;">ON</span>
             </label>
           </div>
         </div>
@@ -80,69 +90,69 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="row">
         <div class="col-md-12">
           <h4 class="font-weight-bold">Información</h4>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <span>Cliente:</span>
+        <div class="col-md-3">
+          <span class="cabecera-info">Cliente:</span>
         </div>
-        <div class="col-md-8">
-          <span class="font-weight-bold"></span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <span>Pedido:</span>
-        </div>
-        <div class="col-md-8">
-          <span class="font-weight-bold"></span>
+        <div class="col-md-9">
+          <span id="info-cliente" class="info-desc"></span>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <span>Modelo:</span>
+        <div class="col-md-3">
+          <span class="cabecera-info">Pedido/Linea:</span>
         </div>
-        <div class="col-md-8">
-          <span class="font-weight-bold"></span>
+        <div class="col-md-9">
+          <span id="info-pedido" class="info-desc">1565/1</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <span class="cabecera-info">Modelo:</span>
+        </div>
+        <div class="col-md-9">
+          <span id="info-modelo" class="info-desc"></span>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="row">
         <div class="col-md-12">
           <h4 class="font-weight-bold">Etiqueta</h4>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <span>Línea 1</span>
+        <div class="col-md-2">
+          <span class="cabecera-linea">1. </span>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input autocomplete="off" id="input-linea-1" class="use-keyboard-input" type="text" />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <span>Línea 2</span>
+        <div class="col-md-2">
+          <span class="cabecera-linea">2.</span>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input autocomplete="off" id="input-linea-2" class="use-keyboard-input" type="text" />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
-          <span>Línea 3</span>
+        <div class="col-md-2">
+          <span class="cabecera-linea">3.</span>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <input autocomplete="off" id="input-linea-3" class="use-keyboard-input" type="text" />
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <!--div class="col-md-4">
       <div class="row">
         <div class="col-md-12">
           <h4 class="font-weight-bold">Configuración</h4>
@@ -166,7 +176,7 @@
         <div class="col-md-6">
         </div>
       </div>
-    </div>
+    </div-->
   </div>
 </div>
 
