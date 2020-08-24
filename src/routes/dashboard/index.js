@@ -56,8 +56,8 @@ router.post('/utillajes/buscarMarcajes',async (req,res)=>{
 
 router.post('/utillajes/guardarMarcajes',async (req,res)=>{
     try{
-        const {codigoUtillaje,talla, marcaje1, marcaje2, marcaje3} = req.body
-        let utillaje = await guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje,talla,marcaje1,marcaje2,marcaje3)
+        const {codigoUtillaje,talla, marcaje1, marcaje2, marcaje3,ficheroMarcaje} = req.body
+        let utillaje = await guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje,talla,marcaje1,marcaje2,marcaje3,ficheroMarcaje)
         res.json(utillaje) 
     }catch(err){
         console.log(err)
@@ -102,7 +102,7 @@ router.post('/impresora/cambios',async (req,res)=>{
             msg  =msgMaker.changeValues(labelName, items)
             await promiseSocket.write(msg)
             await promiseSocket.end()
-            res.json({mensaje: 'Mensaje enviado'})
+            res.json({mensaje: 'Mensaje enviado',labelName: labelName})
         }catch(error){
             console.error(error)
             if(connected){

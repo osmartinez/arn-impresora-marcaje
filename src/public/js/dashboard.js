@@ -4,6 +4,7 @@ let leyendoCodigo = false
 let comunicandoImpresora = false
 let timerTextosMarcajes = null
 let utillajeTalla = null
+let labelName = null
 
 const inputs = Array.from(document.getElementsByTagName('INPUT')).filter(x=>x.id.includes('linea'))
 const elementoSaldos = document.getElementById('saldos')
@@ -13,6 +14,8 @@ const elementoInfoModelo = document.getElementById('info-modelo')
 const elementoInfoPedido = document.getElementById('info-pedido')
 const elementoInfoUtillaje = document.getElementById('info-utillaje')
 const elementoInfoTalla = document.getElementById('info-talla')
+const btnReset = document.getElementById('btn-reset-campos')
+const elementosInfo = [elementoInfoUtillaje,elementoInfoModelo,elementoInfoPedido,elementoInfoUtillaje,elementoInfoTalla]
 
 function desseleccionar() {
     var tmp = document.createElement("input");
@@ -46,7 +49,10 @@ function enviarTextoImpresora(actualizar=true) {
                     linea2: document.getElementById('input-linea-2').value,
                     linea3: document.getElementById('input-linea-3').value
                 }),
-            success: () => {
+            success: (mensaje) => {
+                if(mensaje.labelName){
+                    labelName = mensaje.labelName
+                }
             },
             error: (err) => {
                 console.log(err)
@@ -66,7 +72,8 @@ function enviarTextoImpresora(actualizar=true) {
                         talla: utillajeTalla.talla,
                         marcaje1: document.getElementById('input-linea-1').value,
                         marcaje2: document.getElementById('input-linea-2').value,
-                        marcaje3: document.getElementById('input-linea-3').value
+                        marcaje3: document.getElementById('input-linea-3').value,
+                        ficheroMarcaje: labelName
                     }),
                 success: () => {
                 },
@@ -150,6 +157,7 @@ function buscarPrepaquete(codigoPrepaquete) {
                         }
                         else{
                             utillajeTalla = null
+                            labelName = null
                         }
                     },
                     error: (err) => {
@@ -203,7 +211,6 @@ function keyUpPrefijoEntero(e) {
         }
     }
 }
-
 function keyUp(e) {
     var elementoFocus = document.activeElement;
 
@@ -239,8 +246,19 @@ function keyUp(e) {
         }
     }
 }
+function resetearCampos(){
+    utillajeTalla = null
+    labelName = null 
+    for(const elemento of elementosInfo){
+        elemento.innerHTML = '...'
+    }
+    for(const input in inputs){
+        input.value = ''
+    }
+    enviarTextoImpresora(actualizar=false)
+}
 
-// ¡¡ event listeners
+// ¡¡ add event listeners
 Keyboard.init()
 document.addEventListener("keyup", keyUp, false);
 Keyboard.eventHandlers.onchange = enviarTextoImpresora
@@ -250,5 +268,6 @@ for (const input of inputs) {
 document.getElementById('btn-restar-saldos').addEventListener('click', restarSaldos, false)
 document.getElementById('btn-sumar-saldos').addEventListener('click', sumarSaldos, false)
 checkEstado.addEventListener('click', cambiarEstadoImpresora, false)
-// event listeners !!
+btnReset.addEventListener('click',resetearCampos,false)
+// add event listeners !!
 

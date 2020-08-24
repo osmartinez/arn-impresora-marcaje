@@ -135,7 +135,7 @@ module.exports = {
         }
     },
 
-    async guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje, talla, marcaje1, marcaje2, marcaje3) {
+    async guardarImpresionMarcajePorUtillajeTalla(codigoUtillaje, talla, marcaje1, marcaje2, marcaje3,ficheroMarcaje) {
         try {
 
             var response = await fetch(`${url}/utillajes/guardarImpresionMarcajePorUtillajeTalla`,
@@ -148,6 +148,7 @@ module.exports = {
                             impresionMarcaje1: marcaje1.trim(),
                             impresionMarcaje2: marcaje2.trim(),
                             impresionMarcaje3: marcaje3.trim(),
+                            ficheroMarcaje: ficheroMarcaje,
                         }
                     ),
                     headers: { 'Content-Type': 'application/json' }
