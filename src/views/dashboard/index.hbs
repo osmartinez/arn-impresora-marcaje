@@ -4,6 +4,10 @@
     /* Safari and Chrome */
   }
 
+  .intensidad{
+        -webkit-transform: scale(2.3);
+  }
+
   .btn-floating {
     -webkit-transform: scale(1.6);
     /* Safari and Chrome */
@@ -142,7 +146,7 @@
       </div>
       <div class="row">
         <div class="col-md-1">
-            <span></span>
+          <span></span>
         </div>
         <div class="col-md-11">
           <a id="btn-reset-campos" class="btn-floating btn-lg btn-warning"><i class="fas fa-eraser"></i></a>
@@ -177,6 +181,14 @@
         </div>
         <div class="col-md-10">
           <input autocomplete="off" id="input-linea-3" class="use-keyboard-input" type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <span class="cabecera-linea">Color</span>
+        </div>
+        <div class="col-md-8">
+          <input id="calculatorSlider" class="no-border intensidad" type="range" value="3" min="1" max="10" />
         </div>
       </div>
     </div>
