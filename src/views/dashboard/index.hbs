@@ -1,14 +1,12 @@
 <style>
   .lever {
-    /* Double-sized Checkboxes */
-    -ms-transform: scale(2.4);
-    /* IE */
-    -moz-transform: scale(2.4);
-    /* FF */
-    -webkit-transform: scale(2.4);
+    -webkit-transform: scale(4);
     /* Safari and Chrome */
-    -o-transform: scale(2.4);
-    /* Opera */
+  }
+
+  .btn-floating {
+    -webkit-transform: scale(1.6);
+    /* Safari and Chrome */
   }
 
   input[type='text'] {
@@ -16,17 +14,17 @@
     margin-bottom: 10px;
   }
 
-  .cabecera-linea{
+  .cabecera-linea {
     font-size: 18px;
     vertical-align: middle;
   }
 
-  .cabecera-info{
+  .cabecera-info {
     font-size: 18px;
     vertical-align: middle;
   }
 
-  .info-desc{
+  .info-desc {
     font-size: 20px;
     font-weight: bold;
     vertical-align: middle;
@@ -40,30 +38,33 @@
           <h3>Pares</h3>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6">
-          <h3 class="font-weight-bold">0</h3>
+          <h2 class="font-weight-bold">0</h2>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 col-sm-6 col-lg-6">
-          <h3 >Saldos</h3>
+          <h3>Saldos</h3>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6">
-          <h3 id="saldos" class="font-weight-bold">0</h3>
+          <h2 id="saldos" class="font-weight-bold">0</h2>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6 col-sm-6 col-lg-6">
-          <a id="btn-restar-saldos" class="btn-floating btn-lg btn-danger"><i class="fas fa-minus"></i></a>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6">
-          <a id="btn-sumar-saldos" class="btn-floating btn-lg btn-primary"><i class="fas fa-plus"></i></a>
-        </div>
-      </div>
+
     </div>
     <div class="col-md-4">
       <div class="row">
         <div class="col-md-12">
-          <span></span>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6">
+              <a id="btn-restar-saldos" class="btn-floating btn-lg btn-danger"><i class="fas fa-minus"></i></a>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6">
+              <a id="btn-sumar-saldos" class="btn-floating btn-lg btn-primary"><i class="fas fa-plus"></i></a>
+            </div>
+          </div>
+          <div class="row">
+            <span style="height: 100px;"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -76,13 +77,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2">
+          <span></span>
+        </div>
+        <div class="col-md-10">
           <div class="switch">
             <label class="font-weight-bold">
-              <span style="margin-right: 28px ;">OFF</span>
+              <span style="margin-right: 60px ;"></span>
               <input id="checkEstado" type="checkbox">
               <span class="lever"></span>
-              <span style="margin-left: 28px ;">ON</span>
+              <span style="margin-left: 60px ;"></span>
             </label>
           </div>
         </div>
@@ -101,15 +105,15 @@
           <span class="cabecera-info">Cliente:</span>
         </div>
         <div class="col-md-9">
-          <span id="info-cliente" class="info-desc"></span>
+          <span id="info-cliente" class="info-desc">...</span>
         </div>
       </div>
       <div class="row">
         <div class="col-md-3">
-          <span class="cabecera-info">Pedido/Linea:</span>
+          <span class="cabecera-info">Pedido:</span>
         </div>
         <div class="col-md-9">
-          <span id="info-pedido" class="info-desc">1565/1</span>
+          <span id="info-pedido" class="info-desc">...</span>
         </div>
       </div>
       <div class="row">
@@ -117,7 +121,23 @@
           <span class="cabecera-info">Modelo:</span>
         </div>
         <div class="col-md-9">
-          <span id="info-modelo" class="info-desc"></span>
+          <span id="info-modelo" class="info-desc">...</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <span class="cabecera-info">Utillaje:</span>
+        </div>
+        <div class="col-md-9">
+          <span id="info-utillaje" class="info-desc">...</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <span class="cabecera-info">Talla:</span>
+        </div>
+        <div class="col-md-9">
+          <span id="info-talla" class="info-desc">...</span>
         </div>
       </div>
     </div>
