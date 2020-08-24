@@ -147,8 +147,6 @@ function cambiarEstadoImpresora(e) {
         }
     }).then((result) => {
         /* Read more about handling dismissals below */
-        console.log('I was closed')
-
     })
 
 
