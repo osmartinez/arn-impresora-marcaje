@@ -158,7 +158,7 @@ function buscarPrepaquete(codigoPrepaquete) {
         }
     })
 }
-function keyUp(e) {
+function keyUpPrefijoEntero(e) {
     var elementoFocus = document.activeElement;
 
     var code = String(e.code)
@@ -190,6 +190,42 @@ function keyUp(e) {
                     }
                 }, 1000);
 
+            }
+        }
+        else {
+            cadenaLectura = ''
+            leyendoCodigo = false
+        }
+    }
+}
+
+function keyUp(e) {
+    var elementoFocus = document.activeElement;
+
+    var code = String(e.code)
+
+    if (leyendoCodigo) {
+        cadenaLectura += code[code.length - 1]
+        if (cadenaLectura.length === 12) {
+            cadenaLectura = '0'+cadenaLectura
+            buscarPrepaquete(cadenaLectura)
+            limpiarCodigo()
+            cadenaLectura = ''
+            leyendoCodigo = false
+            desseleccionar()
+        }
+    }
+    else {
+        if (code === 'Numpad4' || code === 'Digit4') {
+            if (cadenaLectura === '') {
+                cadenaLectura = '4'
+                leyendoCodigo = true
+                setTimeout(function () {
+                    if (cadenaLectura === '4') {
+                        cadenaLectura = ''
+                        leyendoCodigo = false
+                    }
+                }, 1000);
             }
         }
         else {
