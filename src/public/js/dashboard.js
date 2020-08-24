@@ -15,7 +15,7 @@ const elementoInfoPedido = document.getElementById('info-pedido')
 const elementoInfoUtillaje = document.getElementById('info-utillaje')
 const elementoInfoTalla = document.getElementById('info-talla')
 const btnReset = document.getElementById('btn-reset-campos')
-const elementosInfo = [elementoInfoUtillaje,elementoInfoModelo,elementoInfoPedido,elementoInfoUtillaje,elementoInfoTalla]
+const elementosInfo = [elementoInfoCliente,elementoInfoModelo,elementoInfoPedido,elementoInfoUtillaje,elementoInfoTalla]
 
 function desseleccionar() {
     var tmp = document.createElement("input");
@@ -252,7 +252,7 @@ function resetearCampos(){
     for(const elemento of elementosInfo){
         elemento.innerHTML = '...'
     }
-    for(const input in inputs){
+    for(const input of inputs){
         input.value = ''
     }
     enviarTextoImpresora(actualizar=false)
