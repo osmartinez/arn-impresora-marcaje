@@ -11,6 +11,8 @@ const checkEstado = document.getElementById('checkEstado')
 const elementoInfoCliente = document.getElementById('info-cliente')
 const elementoInfoModelo = document.getElementById('info-modelo')
 const elementoInfoPedido = document.getElementById('info-pedido')
+const elementoInfoUtillaje = document.getElementById('info-utillaje')
+const elementoInfoTalla = document.getElementById('info-talla')
 
 function desseleccionar() {
     var tmp = document.createElement("input");
@@ -121,7 +123,10 @@ function buscarPrepaquete(codigoPrepaquete) {
                 let prepaquete = data[0]
                 elementoInfoCliente.innerHTML = prepaquete.NOMBRECLI
                 elementoInfoModelo.innerHTML = prepaquete.DESCRIPCIONARTICULO
-                elementoInfoPedido.innerHTML = '19992/15'
+                elementoInfoPedido.innerHTML = prepaquete.PedidoLinea
+                elementoInfoUtillaje.innerHTML = prepaquete.CodUtillaje
+                elementoInfoTalla.innerHTML = prepaquete.Talla
+
                 $.ajax({
                     method: 'POST',
                     timeout: 3000,
