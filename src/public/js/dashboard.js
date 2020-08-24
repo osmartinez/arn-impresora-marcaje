@@ -308,7 +308,6 @@ document.getElementById('btn-sumar-saldos').addEventListener('click', sumarSaldo
 checkEstado.addEventListener('click', cambiarEstadoImpresora, false)
 btnReset.addEventListener('click', resetearCampos, false)
 
-const slider = $("#calculatorSlider");
 
 // add event listeners !!
 
