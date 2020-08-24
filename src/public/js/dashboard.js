@@ -6,7 +6,7 @@ let timerTextosMarcajes = null
 let utillajeTalla = null
 let labelName = null
 
-const inputs = Array.from(document.getElementsByTagName('INPUT')).filter(x=>x.id.includes('linea'))
+const inputs = Array.from(document.getElementsByTagName('INPUT')).filter(x => x.id.includes('linea'))
 const elementoSaldos = document.getElementById('saldos')
 const checkEstado = document.getElementById('checkEstado')
 const elementoInfoCliente = document.getElementById('info-cliente')
@@ -15,7 +15,7 @@ const elementoInfoPedido = document.getElementById('info-pedido')
 const elementoInfoUtillaje = document.getElementById('info-utillaje')
 const elementoInfoTalla = document.getElementById('info-talla')
 const btnReset = document.getElementById('btn-reset-campos')
-const elementosInfo = [elementoInfoCliente,elementoInfoModelo,elementoInfoPedido,elementoInfoUtillaje,elementoInfoTalla]
+const elementosInfo = [elementoInfoCliente, elementoInfoModelo, elementoInfoPedido, elementoInfoUtillaje, elementoInfoTalla]
 
 function desseleccionar() {
     var tmp = document.createElement("input");
@@ -31,7 +31,7 @@ function limpiarCodigo() {
         }
     }
 }
-function enviarTextoImpresora(actualizar=true) {
+function enviarTextoImpresora(actualizar = true) {
     if (timerTextosMarcajes != null) {
         clearTimeout(timerTextosMarcajes)
     }
@@ -50,7 +50,7 @@ function enviarTextoImpresora(actualizar=true) {
                     linea3: document.getElementById('input-linea-3').value
                 }),
             success: (mensaje) => {
-                if(mensaje.labelName){
+                if (mensaje.labelName) {
                     labelName = mensaje.labelName
                 }
             },
@@ -59,7 +59,7 @@ function enviarTextoImpresora(actualizar=true) {
             }
         })
 
-        if(utillajeTalla != null && actualizar){
+        if (utillajeTalla != null && actualizar) {
             $.ajax({
                 method: 'POST',
                 timeout: 3000,
@@ -82,7 +82,7 @@ function enviarTextoImpresora(actualizar=true) {
                 }
             })
         }
-       
+
     }, 3000)
 }
 function restarSaldos() {
@@ -97,21 +97,61 @@ function sumarSaldos() {
 }
 function cambiarEstadoImpresora(e) {
 
-    e.preventDefault()
-    let encendida = String(checkEstado.checked)
-    let cmd = (encendida == 'true') ? 'on' : 'off'
-    $.ajax({
-        method: 'POST',
-        timeout: 3000,
-        url: `/dashboard/impresora/${cmd}`,
-        dataType: 'json',
-        success: () => {
-            checkEstado.checked = !checkEstado.checked
+    //e.preventDefault()
+    let timerInterval
+    Swal.fire({
+        title: 'Comunicación',
+        html: 'Enviando orden a la impresora...',
+        onBeforeOpen: () => {
+            Swal.showLoading()
+            let encendida = String(checkEstado.checked)
+            let cmd = (encendida == 'true') ? 'on' : 'off'
+            $.ajax({
+                method: 'POST',
+                timeout: 3000,
+                url: `/dashboard/impresora/${cmd}`,
+                dataType: 'json',
+                success: () => {
+                    checkEstado.checked = (cmd == 'on') ? true : false
+                    swal.close()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                    })
+
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Comunicación exitosa'
+                    })
+                },
+                error: (err) => {
+                    checkEstado.checked = (cmd == 'on') ? false : true
+                    console.log(err)
+                    swal.close()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                    })
+
+                    Toast.fire({
+                        type: 'error',
+                        title: 'Fallo en la comunicación'
+                    })
+                }
+            })
         },
-        error: (err) => {
-            console.log(err)
+        onClose: () => {
+
         }
+    }).then((result) => {
+        /* Read more about handling dismissals below */
+        console.log('I was closed')
+
     })
+
+
 }
 function buscarPrepaquete(codigoPrepaquete) {
     $.ajax({
@@ -152,10 +192,10 @@ function buscarPrepaquete(codigoPrepaquete) {
                             inputs[1].value = utillaje.ImpresionMarcaje2
                             inputs[2].value = utillaje.ImpresionMarcaje3
 
-                            utillajeTalla = {codigoUtillaje: utillaje.CodUtillaje, talla: utillaje.TallaUtillaje}
-                            enviarTextoImpresora(actualizar=false)
+                            utillajeTalla = { codigoUtillaje: utillaje.CodUtillaje, talla: utillaje.TallaUtillaje }
+                            enviarTextoImpresora(actualizar = false)
                         }
-                        else{
+                        else {
                             utillajeTalla = null
                             labelName = null
                         }
@@ -219,7 +259,7 @@ function keyUp(e) {
     if (leyendoCodigo) {
         cadenaLectura += code[code.length - 1]
         if (cadenaLectura.length === 12) {
-            cadenaLectura = '0'+cadenaLectura
+            cadenaLectura = '0' + cadenaLectura
             buscarPrepaquete(cadenaLectura)
             limpiarCodigo()
             cadenaLectura = ''
@@ -246,16 +286,16 @@ function keyUp(e) {
         }
     }
 }
-function resetearCampos(){
+function resetearCampos() {
     utillajeTalla = null
-    labelName = null 
-    for(const elemento of elementosInfo){
+    labelName = null
+    for (const elemento of elementosInfo) {
         elemento.innerHTML = '...'
     }
-    for(const input of inputs){
+    for (const input of inputs) {
         input.value = ''
     }
-    enviarTextoImpresora(actualizar=false)
+    enviarTextoImpresora(actualizar = false)
 }
 
 // ¡¡ add event listeners
@@ -268,6 +308,6 @@ for (const input of inputs) {
 document.getElementById('btn-restar-saldos').addEventListener('click', restarSaldos, false)
 document.getElementById('btn-sumar-saldos').addEventListener('click', sumarSaldos, false)
 checkEstado.addEventListener('click', cambiarEstadoImpresora, false)
-btnReset.addEventListener('click',resetearCampos,false)
+btnReset.addEventListener('click', resetearCampos, false)
 // add event listeners !!
 
