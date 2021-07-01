@@ -30,7 +30,7 @@ async function cambiarEstadoImpresora(encendida,res){
         }
         res.sendStatus(500)
     }
-}
+} 
 
 router.post('/prepaquete',async (req,res)=>{
     try{

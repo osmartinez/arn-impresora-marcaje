@@ -230,12 +230,12 @@ function keyUpPrefijoEntero(e) {
                 cadenaLectura = '0'
             }
         }
-        else if (code === 'Numpad4' || code === 'Digit4') {
+        else if (code === 'Numpad5' || code === 'Digit5') {
             if (cadenaLectura === '0') {
-                cadenaLectura += '4'
+                cadenaLectura += '5'
                 leyendoCodigo = true
                 setTimeout(function () {
-                    if (cadenaLectura === '04') {
+                    if (cadenaLectura === '05') {
                         cadenaLectura = ''
                         leyendoCodigo = false
                     }
@@ -266,12 +266,12 @@ function keyUp(e) {
         }
     }
     else {
-        if (code === 'Numpad4' || code === 'Digit4') {
+        if (code === 'Numpad5' || code === 'Digit5') {
             if (cadenaLectura === '') {
-                cadenaLectura = '4'
+                cadenaLectura = '5'
                 leyendoCodigo = true
                 setTimeout(function () {
-                    if (cadenaLectura === '4') {
+                    if (cadenaLectura === '5') {
                         cadenaLectura = ''
                         leyendoCodigo = false
                     }

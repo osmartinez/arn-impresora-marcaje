@@ -115,7 +115,7 @@ module.exports = {
 
     async buscarPrepaquete(codigoPrepaquete, codigoSeccion) {
         try {
-            var response = await fetch(`${url}/prepaquetes/${codigoPrepaquete}/${codigoSeccion}`)
+            var response = await fetch(`${url}/barquillas/buscarInformacionEnSeccion/${codigoPrepaquete}/${codigoSeccion}`)
             var prepaquetes = await response.json()
             return prepaquetes
         } catch (err) {
